@@ -1,0 +1,231 @@
+R1#show running-config
+Building configuration...
+
+Current configuration : 3037 bytes
+!
+! Last configuration change at 22:30:32 UTC Thu Oct 29 2026 by user10
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging buffered 16384
+!
+aaa new-model
+!
+!
+aaa group server radius GrupoRadius
+ server name ServidorNPS
+!
+aaa authentication login AccesoSSH local
+aaa authentication login AccesoFisico group GrupoRadius local
+aaa authorization console
+aaa authorization exec AccesoFisico group GrupoRadius local
+aaa accounting exec default start-stop group GrupoRadius
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+!
+!
+!
+ip domain name seguridad.local
+ip cef
+no ipv6 cef
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+username admin privilege 15 secret 5 $1$I/Rz$T1DPrVu5JYPBUSSe3eslB.
+!
+!
+!
+!
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface FastEthernet1/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/0
+ ip address 10.24.12.2 255.255.255.0
+ duplex full
+!
+interface Ethernet2/1
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/2
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet2/3
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/0
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/1
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/2
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/3
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/4
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/5
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/6
+ no ip address
+ shutdown
+ duplex full
+!
+interface Ethernet3/7
+ no ip address
+ shutdown
+ duplex full
+!
+interface Serial4/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial4/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial4/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial4/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/1
+no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/4
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/5
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/6
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial5/7
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+radius server ServidorNPS
+ address ipv4 10.24.12.10 auth-port 1812 acct-port 1813
+ pac key ClaveRadius2026*
+!
+!
+control-plane
+!
+!
+line con 0
+ authorization exec AccesoFisico
+ login authentication AccesoFisico
+ stopbits 1
+line aux 0
+ authorization exec AccesoFisico
+ login authentication AccesoFisico
+ stopbits 1
+line vty 0 4
+ login authentication AccesoSSH
+ transport input ssh
+!
+!
+end
+
+R1#
